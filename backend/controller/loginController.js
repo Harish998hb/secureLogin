@@ -1,6 +1,12 @@
 import { UserModel } from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import redis from "redis";
 import jwt from "jsonwebtoken";
+
+// const redisClient = redis.createClient(6379).on("err", (err) => {
+//   if (err) console.log(err);
+//   else console.log("Successfully connected to redis client");
+// });
 
 export async function createUser(req, res) {
   const { email, password, phoneNum, userName } = req.body;
@@ -36,7 +42,7 @@ export async function loginUser(req, res) {
     if (!isValidPassword) {
       res.status(401).send("Invalid Credentials");
     } else {
-      const tokenID = jwt.sign({id:isUserExists._id}, "secret", {
+      const tokenID = jwt.sign({ id: isUserExists._id }, "secret", {
         expiresIn: 1000 * 60 * 60 * 24 * 2,
       });
       return res.json({
@@ -46,3 +52,18 @@ export async function loginUser(req, res) {
     }
   }
 }
+
+// export async function getUser(req, res) {
+//   const { id, email } = req.body;
+//   const isInRedis = await redisClient.get(id);
+//   console.log(isInRedis);
+//   if (isInRedis) {
+//     res.json({ user: isInRedis.userName });
+//   } else {
+//     const isUser = await UserModel.findById({ _id: id });
+//     if (isUser) {
+//       await redisClient.setEx(id, 3600, isUser);
+//       res.json({ user: isUser.userName });
+//     } else res.json({ msg: "No user found" });
+//   }
+// }

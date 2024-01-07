@@ -1,7 +1,21 @@
 import { VerifyOtpModel } from "../models/otpModel.js";
 import { UserModel } from "../models/userModel.js";
+import nodemailer from "nodemailer";
 
 import bcrypt from "bcrypt";
+
+// Creating the SMPT transport
+const mailConfigure = {
+  host: "smtp.gmail.com",
+  port: 467,
+  secure: false,
+  auth: {
+    user: process.env.GUSER,
+    pass: process.env.GPASS,
+  },
+};
+
+const mailTransport = nodemailer.createTransport(mailConfigure);
 
 export async function getOtp(req, res) {
   const { userId } = req.body;
@@ -22,7 +36,16 @@ export async function getOtp(req, res) {
     });
     await newotpRecord.save();
     // Send the otp to the users email using nodemailer
-    
+    const mailOptions = {
+      from: process.env.GUSER,
+      to: [userExists.email],
+      subject: "Hola Mate",
+      html: `<h1>Mate Are you there? ${otp}</h1>`,
+    };
+    mailTransport.sendMail(mailOptions, (err) => {
+      if (err) console.log(err);
+      else console.log("Mail send successfully");
+    });
     res.json({ msg: "OTP Has been send to the registed email" });
   } else return res.status(404).json({ error: "No Such User Found" });
 }
