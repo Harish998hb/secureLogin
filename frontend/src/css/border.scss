@@ -1,0 +1,35 @@
+.border {
+  border: transparent 2px solid;
+
+  &.default {
+    border: var(--tx-clr-default) 2px solid;
+  }
+
+  &.white {
+    border: var(--tx-clr-white) 2px solid;
+  }
+
+  &.pri {
+    border: var(--tx-clr-primary) 2px solid;
+  }
+
+  &.sec {
+    border: var(--tx-clr-secondary) 2px solid;
+  }
+}
+
+.radius {
+  border-radius: 10px;
+
+  &.small {
+    border-radius: 5px;
+  }
+
+  &.large {
+    border-radius: 16px;
+  }
+
+  &.round {
+    border-radius: 24%;
+  }
+}

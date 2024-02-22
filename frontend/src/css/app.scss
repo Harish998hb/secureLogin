@@ -1,0 +1,20 @@
+// app global css in SCSS form
+@import "./border.scss";
+@import "./color.scss";
+@import "./general.scss";
+:root {
+  --tx-clr-primary: #C5ADC5;
+  --tx-clr-secondary: #B2B5E0;
+  // --tx-clr-te: #000;
+  --tx-clr-default: #000;
+  --tx-clr-white: #fff;
+
+}
+
+@for $i from 1 through 10 {
+  .is-size-#{$i} {
+    font-size: #{(($i * 0.3) + 10)}rem;
+  }
+}
+
+

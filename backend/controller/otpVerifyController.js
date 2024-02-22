@@ -7,8 +7,8 @@ import bcrypt from "bcrypt";
 // Creating the SMPT transport
 const mailConfigure = {
   host: "smtp.gmail.com",
-  port: 467,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.GUSER,
     pass: process.env.GPASS,
